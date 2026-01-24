@@ -1,0 +1,60 @@
+graph TB
+    subgraph Frontend["Frontend (Vercel)"]
+        NextJS[Next.js App<br/>TypeScript + MUI]
+    end
+    
+    subgraph Gateway["API Gateway (GCP Cloud Run)"]
+        SpringGateway[Spring Cloud Gateway]
+    end
+    
+    subgraph Microservices["Spring Boot Microservices (GCP Cloud Run)"]
+        MultimodalSvc[multimodal-service]
+        AgenticSvc[agentic-service]
+        FinetuningSvc[finetuning-service]
+        RAGSvc[rag-service]
+        ExplainabilitySvc[explainability-service]
+        CollaborationSvc[collaboration-service]
+    end
+    
+    subgraph AIService["AI Service (GCP Cloud Run)"]
+        PythonService[Python FastAPI Service]
+        OpenAIIntegration[OpenAI Integration]
+        HuggingFaceIntegration[Hugging Face Integration]
+    end
+    
+    subgraph Databases["Databases (GCP)"]
+        PostgreSQL[(Cloud SQL<br/>PostgreSQL + pgvector)]
+        Firestore[(Firestore)]
+    end
+    
+    subgraph External["External Services"]
+        OpenAIAPI[OpenAI API]
+        HuggingFaceAPI[Hugging Face API]
+    end
+    
+    NextJS -->|HTTPS| SpringGateway
+    SpringGateway -->|HTTP| MultimodalSvc
+    SpringGateway -->|HTTP| AgenticSvc
+    SpringGateway -->|HTTP| FinetuningSvc
+    SpringGateway -->|HTTP| RAGSvc
+    SpringGateway -->|HTTP| ExplainabilitySvc
+    SpringGateway -->|HTTP| CollaborationSvc
+    
+    MultimodalSvc -->|HTTP| PythonService
+    AgenticSvc -->|HTTP| PythonService
+    FinetuningSvc -->|HTTP| PythonService
+    RAGSvc -->|HTTP| PythonService
+    ExplainabilitySvc -->|HTTP| PythonService
+    CollaborationSvc -->|HTTP| PythonService
+    
+    PythonService -->|API Calls| OpenAIAPI
+    PythonService -->|Model Loading| HuggingFaceAPI
+    
+    MultimodalSvc -->|JDBC| PostgreSQL
+    AgenticSvc -->|JDBC| PostgreSQL
+    FinetuningSvc -->|JDBC| PostgreSQL
+    RAGSvc -->|JDBC| PostgreSQL
+    RAGSvc -->|Vector Search| PostgreSQL
+    ExplainabilitySvc -->|JDBC| PostgreSQL
+    CollaborationSvc -->|JDBC| PostgreSQL
+    CollaborationSvc -->|SDK| Firestore

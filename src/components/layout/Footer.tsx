@@ -20,7 +20,7 @@ export default function Footer() {
           © {new Date().getFullYear()} CogArc - Cognitive Architecture Showcase. All rights reserved.
         </Typography>
         <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
-          Built with Next.js, TypeScript, and Material-UI
+          Cogarc.com
         </Typography>
       </Container>
     </Box>
