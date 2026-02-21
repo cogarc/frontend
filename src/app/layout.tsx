@@ -6,6 +6,7 @@ import AppBar from '@/components/layout/AppBar';
 import Footer from '@/components/layout/Footer';
 import { Box } from '@mui/material';
 import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "CogArc - Cognitive Architecture Showcase",
@@ -19,6 +20,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-6HQGE0R8RS"/>
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+      >
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-6HQGE0R8RS');
+        `}
+      </Script>
+      </head>
       <body>
         <ThemeProvider theme={theme}>
           <CssBaseline />
